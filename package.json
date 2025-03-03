@@ -1,7 +1,24 @@
 {
   "name": "access-lens",
   "version": "0.1.0",
+  "description": "A web application for real-time website accessibility analysis and improvement suggestions",
   "private": true,
+  "author": {
+    "name": "Access Lens Team"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/access-lens"
+  },
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "web",
+    "analysis",
+    "WCAG",
+    "nextjs"
+  ],
+  "license": "MIT",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
