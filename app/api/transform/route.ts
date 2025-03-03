@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AccessibilityPreferences } from '../../../app/components/PreferencesPanel';
+import { transformContent, analyzeAccessibility } from '../../lib/ai-service';
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,13 +30,21 @@ export async function POST(request: NextRequest) {
     }
 
     const html = await response.text();
+    
+    // Extract title
+    const title = html.match(/<title>(.*?)<\/title>/i)?.[1] || 'Untitled Page';
 
-    // TODO: Process the HTML content based on preferences
-    // For now, return a simple modified version
+    // Transform content using AI
+    const [transformedContent, accessibilityAnalysis] = await Promise.all([
+      transformContent(html),
+      analyzeAccessibility(html),
+    ]);
+
     const processedContent = {
       originalUrl: url,
-      title: html.match(/<title>(.*?)<\/title>/i)?.[1] || 'Untitled Page',
-      content: html,
+      title,
+      ...transformedContent,
+      accessibility: accessibilityAnalysis,
       preferences,
     };
 
